@@ -1,48 +1,55 @@
 pipeline {
     agent any
-    
-       tools
+	
+	  tools
     {
-        maven "maven"
+       maven "maven"
     }
-    stages {
-        stage('checkout') {
-            steps {
-                
+ stages {
+      stage('checkout') {
+           steps {
+             
                 git branch: 'master', url: 'https://github.com/velpularajeswari/WebApplication'
-
-
-            }
+             
+          }
         }
-        stage('Package') {
+	 stage('Execute Maven') {
+           steps {
+             
+                sh 'mvn package'             
+          }
+        }
+        
+
+  stage('Docker Build and Tag') {
+           steps {
+              
+                sh 'docker build -t rajeswari1994/maven-app:1.0.0' 
+                //sh 'docker tag samplewebapp nikhilnidhi/samplewebapp:latest'
+                //sh 'docker tag samplewebapp nikhilnidhi/samplewebapp:$BUILD_NUMBER'
+               
+          }
+        }
+     
+  stage('Publish image to Docker Hub') {
+          
             steps {
-                
-                sh 'mvn clean package'
-                
-            }
-        }
-
-        
-    stage('Build Docker Imagre') {
-        
-            steps{
-                
-                sh "docker build -t rajeswari1994/maven-app:1.0.0 ."
-            }
-        }
-    stage("push image") {
-        
-            steps {
-                withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
+        withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
                  sh "docker login -u rajeswari1994 -p ${dockerpwd}"
-                 sh "docker push rajeswari1994/maven-app:1.0.0"
+                 sh "docker push rajeswari1994/maven-app:1.0.0" 
+        }
+                  
+          }
+        }
+     
+      stage('Run Docker container on Jenkins Agent') {
+             
+            steps 
+			{
+                sh "docker run -d -p 8003:8080 rajeswari1994/maven-app:1.0.0"
+ 
             }
         }
-        stage('Run Docker Container'){
-            steps{
-                sh "docker run -p 8081:8080 rajeswari1994/maven-app:1.0.0"
-            }
-        }
-    }
-}
-}
+     }
+	}
+    
