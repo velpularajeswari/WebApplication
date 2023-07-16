@@ -22,9 +22,9 @@ pipeline{
         }
         stage("push image"){
             steps{
-                withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
-            sh "docker login -u rajeswari1994 -p ${dockerpwd}"
-            sh "docker push rajeswari1994/maven-app:1.0.0"
+                 withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
+                 sh "docker login -u rajeswari1994 -p ${dockerpwd}"
+                 sh "docker push rajeswari1994/maven-app:1.0.0"
             }
         }
         stage('Run Docker Container'){
