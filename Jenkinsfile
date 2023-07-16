@@ -13,7 +13,7 @@ pipeline {
              
           }
         }
-	 stage('Execute Maven') {
+	 stage('Package') {
            steps {
              
                 sh 'mvn package'             
@@ -21,7 +21,7 @@ pipeline {
         }
         
 
-  stage('Docker Build and Tag') {
+  stage('Docker Build') {
            steps {
               
                 sh 'docker build -t rajeswari/maven-app:1.0.0 .' 
