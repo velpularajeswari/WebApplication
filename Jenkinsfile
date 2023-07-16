@@ -31,7 +31,7 @@ pipeline {
           }
         }
      
-  stage('Publish image to Docker Hub') {
+  stage('Publish Image) {
           
             steps {
         withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
