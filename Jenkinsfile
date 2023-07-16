@@ -1,28 +1,39 @@
-pipeline{
+pipeline {
     agent any
-    tools
+    
+       tools
     {
         maven "maven"
     }
-    stages{
-        stage('checkout'){
-            steps{
+    stages {
+        stage('checkout') {
+            steps {
+                
                 git branch: 'master', url: 'https://github.com/velpularajeswari/WebApplication'
+
+
             }
         }
-        stage('Package'){
-            steps{
+        stage('Package') {
+            steps {
+                
                 sh 'mvn clean package'
+                
             }
         }
-        stage('Build Docker Imagre'){
+
+        
+    stage('Build Docker Imagre') {
+        
             steps{
+                
                 sh "docker build -t rajeswari1994/maven-app:1.0.0 ."
             }
         }
-        stage("push image"){
-            steps{
-                 withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
+    stage("push image") {
+        
+            steps {
+                withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
                  sh "docker login -u rajeswari1994 -p ${dockerpwd}"
                  sh "docker push rajeswari1994/maven-app:1.0.0"
             }
