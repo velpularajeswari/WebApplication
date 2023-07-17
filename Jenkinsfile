@@ -25,8 +25,6 @@ pipeline {
            steps {
               
                 sh 'docker build -t rajeswari/maven-app:1.0.0 .' 
-                //sh 'docker tag samplewebapp nikhilnidhi/samplewebapp:latest'
-                //sh 'docker tag samplewebapp nikhilnidhi/samplewebapp:$BUILD_NUMBER'
                
           }
         }
