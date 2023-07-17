@@ -24,7 +24,7 @@ pipeline {
   stage('Docker Build') {
            steps {
               
-                sh 'docker build -t rajeswari/maven-app:1.0.0 .' 
+                sh 'docker build -t rajeswari/maven-app:3.0 .' 
                
           }
         }
