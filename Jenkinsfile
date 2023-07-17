@@ -25,7 +25,6 @@ pipeline {
            steps {
               
                 sh 'docker build -t rajeswari/maven-app:3.0 .' 
-		sh 'docker tag maven-app rajeswari1994/maven-app:3.0'
                
           }
         }
