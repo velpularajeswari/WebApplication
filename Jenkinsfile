@@ -24,7 +24,7 @@ pipeline {
   stage('Docker Build') {
            steps {
               
-                sh 'docker build -t rajeswari/maven-app:3.0 .' 
+                sh 'docker build -t rajeswari/maven-app:latest .' 
                
           }
         }
@@ -34,7 +34,7 @@ pipeline {
             steps {
         withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
                  sh "docker login -u rajeswari1994 -p ${dockerpwd}"
-                 sh 'docker push rajeswari1994/maven-app:3.0' 
+                 sh 'docker push rajeswari1994/maven-app:latest' 
         }
                   
           }
